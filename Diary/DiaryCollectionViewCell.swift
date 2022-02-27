@@ -8,5 +8,6 @@
 import UIKit
 
 class DiaryCollectionViewCell: UICollectionViewCell {
-    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
 }
