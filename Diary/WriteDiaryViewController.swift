@@ -7,6 +7,11 @@
 
 import UIKit
 
+//작성한 일기 데이터를 전달하기 위한 delegate 패턴 사용
+protocol WriteDiaryViewDelegate: AnyObject {
+    func didSelectReigster(diary: Diary)
+}
+
 class WriteDiaryViewController: UIViewController {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var contentsTextView: UITextView!
@@ -15,6 +20,7 @@ class WriteDiaryViewController: UIViewController {
     
     private let datePicker = UIDatePicker()
     private var diaryDate: Date? //datePicker에서 선택한 날짜를 저장할 프로퍼티
+    weak var delegate: WriteDiaryViewDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,16 +61,25 @@ class WriteDiaryViewController: UIViewController {
         //dateTextField는 다른 텍스트필드와 다르게 키보드가 아닌 DatePicker가 작동되므로 .editngChange 이벤트가 발생하지 않는다. 따라서 DatePicker가 변했을 때 .editChange 이벤트를 직접 발생시켜줘야 한다.
     }
     
+    //등록 버튼의 액션 함수
     @IBAction func tapConfirmButton(_ sender: UIBarButtonItem) {
+        //등록 버튼을 누르면 입력받은 텍스트들을 이용해 Diary 객체를 생성하여 delegate에 정의한 didSelectReigster를 생성한 diary를 파라미터로 호출한다.
+        guard let title = self.titleTextField.text else {return}
+        guard let contents = self.contentsTextView.text else {return}
+        guard let date = self.diaryDate else {return}
+        let diary = Diary(title: title, contents: contents, date: date, isStar: false)
+        
+        self.delegate?.didSelectReigster(diary: diary)
+        self.navigationController?.popViewController(animated: true) //이전 화면으로 돌아가기
     }
     
     //DatePicker에서 날짜 선택 시 행동할 액션 - 날짜 선택시 날짜 텍스트 필드에 해당 날짜가 뜨도록 구현
     @objc private func datePickerValueDidChange(){
-        let formmater = DateFormatter() //날짜와 텍스트를 변환해주는 역할. date타입을 문자열로 변환하거나 날짜형태의 문자열을 date타입으로 변환시켜주는 역할을 한다.
-        formmater.dateFormat = "yyyy년 MM월 dd일 EEEEE" //EEEEE 예) 토
-        formmater.locale = Locale(identifier: "ko_KR")//dateFormat이 한국어 되게끔 한다.
+        let formatter = DateFormatter() //날짜와 텍스트를 변환해주는 역할. date타입을 문자열로 변환하거나 날짜형태의 문자열을 date타입으로 변환시켜주는 역할을 한다.
+        formatter.dateFormat = "yyyy년 MM월 dd일 EEEEE" //EEEEE 예) 토
+        formatter.locale = Locale(identifier: "ko_KR")//dateFormat이 한국어 되게끔 한다.
         self.diaryDate = datePicker.date
-        self.dateTextField.text = formmater.string(from: datePicker.date)
+        self.dateTextField.text = formatter.string(from: datePicker.date)
         
         //dateTextField는 다른 텍스트필드와 다르게 키보드가 아닌 DatePicker가 작동되므로 .editngChange 이벤트가 발생하지 않는다. 따라서 DatePicker가 변했을 때 .editChange 이벤트를 직접 발생시켜줘야 한다.
         self.dateTextField.sendActions(for: .editingChanged)
