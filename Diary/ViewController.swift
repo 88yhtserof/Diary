@@ -88,18 +88,6 @@ class ViewController: UIViewController {
     }
 }
 
-//WriteDiaryViewDelegate에서 데이터를 전달받아 데이터 설정하기
-extension ViewController: WriteDiaryViewDelegate {
-    func didSelectReigster(diary: Diary) {
-        self.diaryList.append(diary) //일기를 등록할 때마다 다이어리 리스트에 추가된다.
-        //목록을 최신 순으로 정렬하기
-        self.diaryList = self.diaryList.sorted{
-            $0.date.compare($1.date) == .orderedDescending //내림차순으로 정렬되게 하라. 즉, 최신 글이 가장 앞에 위치하도록 배치
-        }
-        self.collectionView.reloadData() //일기가 추가될 때마다 컬렉션 뷰의 데이터를 재로드한다.
-    }
-}
-
 //collectionView로 보여지는 컨텐츠를 관리하는 객체이다.
 extension ViewController: UICollectionViewDataSource {
     //지정된 섹션에 표시할 셀의 개수를 묻는 메서드
@@ -140,7 +128,29 @@ extension ViewController: UICollectionViewDelegate {
         let diary = self.diaryList[indexPath.row]
         diaryDetailViewController.diary = diary
         diaryDetailViewController.indexPath = indexPath
+        //DiaryDetailViewController로 화면 전환하기 직전에 해당 뷰컨트롤러의 프로퍼티에 접근하여 delegate 임명하기
+        diaryDetailViewController.delegate = self
         
         self.navigationController?.pushViewController(diaryDetailViewController, animated: true)
+    }
+}
+
+//WriteDiaryViewDelegate에서 데이터를 전달받아 데이터 설정하기
+extension ViewController: WriteDiaryViewDelegate {
+    func didSelectReigster(diary: Diary) {
+        self.diaryList.append(diary) //일기를 등록할 때마다 다이어리 리스트에 추가된다.
+        //목록을 최신 순으로 정렬하기
+        self.diaryList = self.diaryList.sorted{
+            $0.date.compare($1.date) == .orderedDescending //내림차순으로 정렬되게 하라. 즉, 최신 글이 가장 앞에 위치하도록 배치
+        }
+        self.collectionView.reloadData() //일기가 추가될 때마다 컬렉션 뷰의 데이터를 재로드한다.
+    }
+}
+
+//DiaryDetailViewControllerDelegate를 통해 데이터 전달받기
+extension ViewController: DiaryDetailViewControllerDelegate {
+    func didSelectDelete(indexPath: IndexPath) {
+        self.diaryList.remove(at: indexPath.row) //리스트에서도 지우고
+        self.collectionView.deleteItems(at: [indexPath])//collectionView에서도 지우기
     }
 }
