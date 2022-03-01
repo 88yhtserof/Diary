@@ -130,3 +130,17 @@ extension ViewController: UICollectionViewDelegateFlowLayout{
         return CGSize(width: (UIScreen.main.bounds.width / 2) - 20, height: 200)
     }
 }
+
+extension ViewController: UICollectionViewDelegate {
+    //특정 아이템, 즉 특정 cell이 선택되었을 때 호출되는 메서드
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //특정 셀이 선택되었을 때 해당하는 셀의 상세화면이 Push되도록 한다.
+        //DiaryDetailViewController를 인스턴스화 하여 프로퍼티에 접근할 수 있게 해 화면 간 데이터를 전달한다.
+        guard let diaryDetailViewController = self.storyboard?.instantiateViewController(withIdentifier: "DiaryDetailViewController") as? DiaryDetailViewController else {return}
+        let diary = self.diaryList[indexPath.row]
+        diaryDetailViewController.diary = diary
+        diaryDetailViewController.indexPath = indexPath
+        
+        self.navigationController?.pushViewController(diaryDetailViewController, animated: true)
+    }
+}
