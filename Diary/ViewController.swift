@@ -23,6 +23,11 @@ class ViewController: UIViewController {
         
         self.configureCollectionView() //컬렉션 뷰 구성하기
         self.loadDiaryList() //UserDefaults에 저장된 데이터 불러오기
+        //수정 이벤트를 받기 위한 NotificationCenter의 옵져버 생성
+        NotificationCenter.default.addObserver(self, //옵져벼를 추가할 인스턴스
+                                               selector: #selector(editDiaryNotification(_:)), //옵져버가 이벤트를 감지했을 때 호출될 메서드
+                                               name: NSNotification.Name("editDiary"), //감지할 이벤트 이름
+                                               object: nil)
     }
     
     //collectionView의 속성을 설정하는 메서드
@@ -33,6 +38,18 @@ class ViewController: UIViewController {
         //컬렉션 뷰의 컨텐츠와 레이아웃을 설정하기 위해 다음과같이 프로토콜을 채택한다.
         self.collectionView.delegate = self //레이아웃을 위해,UICollectionViewDelegateFlowLayout를 채택했음
         self.collectionView.dataSource = self//컨텐츠 관리를 위해
+    }
+    
+    @objc func editDiaryNotification(_ notification:Notification){
+        guard let diary = notification.object as? Diary else {return}
+        guard let row = notification.userInfo?["indexPath.row"] as? Int else {return}
+        self.diaryList[row] = diary
+        //날짜가 수정되었을 수도 있으니 다시 내림차순 (최신 일기가 상단에) 정렬
+        self.diaryList = self.diaryList.sorted{
+            $0.date.compare($1.date) == .orderedDescending //내림차순정렬
+        }
+        
+        self.collectionView.reloadData() //수정된 리스트에 맞게 컬렉션 뷰도 수정한다.
     }
     
     //화면 전환 바로 직전에 호출된다.
