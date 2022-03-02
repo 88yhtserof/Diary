@@ -6,6 +6,11 @@
 //
 
 import UIKit
+//수정할 다이어리 객체를 전달받을 수 있게 프로퍼티를 만들어 주자.
+enum DiaryEditorMode {
+    case new
+    case edit(IndexPath, Diary) //연관값으로 인덱스와 Diary 객체 받기
+}
 
 //작성한 일기 데이터를 전달하기 위한 delegate 패턴 사용
 protocol WriteDiaryViewDelegate: AnyObject {
@@ -21,14 +26,40 @@ class WriteDiaryViewController: UIViewController {
     private let datePicker = UIDatePicker()
     private var diaryDate: Date? //datePicker에서 선택한 날짜를 저장할 프로퍼티
     weak var delegate: WriteDiaryViewDelegate?
+    var diaryEditorMode: DiaryEditorMode = .new //초기값 설정
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.configureContentsTextView()
         self.configureDatePicker()
-        self.confirmButton.isEnabled = false
         self.configureInputField()
+        self.ConfigureEditMode()
+        self.confirmButton.isEnabled = false
+    }
+    
+    //수정 모드 구성하기
+    private func ConfigureEditMode(){
+        //모드가 수정모드일 때에는 기존 일기 내용 채워주기
+        switch self.diaryEditorMode {
+        case let .edit(_, diary): //열거형의 연관값으로 받은 Diary 객체를 사용하기 위해 diary라는 연관값 변수(?)생성
+            self.titleTextField.text = diary.title
+            self.contentsTextView.text = diary.contents
+            self.dateTextField.text = self.dateToString(date: diary.date)
+            self.diaryDate = diary.date
+            self.confirmButton.title = "수정" //수정모드이므로 버튼 제목을 수정한다.
+        default:
+            break
+        }
+    }
+    
+    //Date타입을 String 타입으로 전환하여 반환
+    private func dateToString(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yy년 MM월 dd일 EEEEE"
+        formatter.locale = Locale(identifier: "ko_KR")
+        
+        return formatter.string(from: date)
     }
     
     //내용 텍스트필드의 UI 구성하기

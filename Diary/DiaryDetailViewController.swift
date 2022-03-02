@@ -24,6 +24,8 @@ class DiaryDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        configureView() //상세 뷰 내용 초기화
     }
     
     //뷰를 프로퍼티값으로 초기화 시켜주는 메서드
@@ -44,7 +46,15 @@ class DiaryDetailViewController: UIViewController {
     }
     
     @IBAction func tapEditButton(_ sender: UIButton) {
+        //수정 버튼 클릭 시 작성 화면으로 이동
+        guard let writeDiaryViewController = self.storyboard?.instantiateViewController(withIdentifier: "WriteDiaryViewController") as? WriteDiaryViewController else {return}
+        guard let indexPath = self.indexPath else {return}
+        guard let diary = self.diary else {return}
+        writeDiaryViewController.diaryEditorMode = .edit(indexPath, diary) //작성 화면으로 넘어갔을 때 새 일기 작성이 아닌 수정이라는 것을 알 수 있다.
+        
+        self.navigationController?.pushViewController(writeDiaryViewController, animated: true)
     }
+    
     @IBAction func tapDeleteButton(_ sender: UIButton) {
         guard let indexPath = self.indexPath else {return}
         self.delegate?.didSelectDelete(indexPath: indexPath)
