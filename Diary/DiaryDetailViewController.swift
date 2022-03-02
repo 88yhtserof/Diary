@@ -45,12 +45,28 @@ class DiaryDetailViewController: UIViewController {
         return formetter.string(from: date)
     }
     
+    //수정 완료 이벤트 발생 시 호출될 셀렉트 함수
+    @objc func editDiaryNotification(_ notification: Notification){
+        guard let diary = notification.object as? Diary else {return}//Notification.object 프로퍼티를 통해서 포스트될 때 보낸 객체를 가져올 수 있다.
+        guard let row = notification.userInfo?["indexPath.row"] as? Int else {return} //userInfo 프로퍼티를 통해 포스트될 때 전달된 딕셔너리를 가져올 수 잇다.
+        
+        self.diary = diary //수정된 객체로 diary를 업데이트하고
+        self.configureView() //뷰를 다시 초기화한다.
+    }
+    
     @IBAction func tapEditButton(_ sender: UIButton) {
         //수정 버튼 클릭 시 작성 화면으로 이동
         guard let writeDiaryViewController = self.storyboard?.instantiateViewController(withIdentifier: "WriteDiaryViewController") as? WriteDiaryViewController else {return}
         guard let indexPath = self.indexPath else {return}
         guard let diary = self.diary else {return}
         writeDiaryViewController.diaryEditorMode = .edit(indexPath, diary) //작성 화면으로 넘어갔을 때 새 일기 작성이 아닌 수정이라는 것을 알 수 있다.
+        
+        NotificationCenter.default.addObserver(self, //어떤 인스턴스에서 옵져빙할 것인지 알려주는 파라이터
+                                               selector: #selector(editDiaryNotification(_:)),//관찰하고 있다가 이벤트를 감지하면 해당 함수 호출
+                                               name: NSNotification.Name("editDiary"),//해당 이름의 Notification 이벤트를 관찰하도록 설정
+                                               object: nil)
+        //옵져버를 추가하게 되면 특정 이름의 Notification 이벤트가 발생하였는지 계속 관찰을 하고 특정한 이름의 이벤트가 발생하면 특정 행동을 수행하게 된다.
+        //이렇게 수정 버튼을 클릭 했을 때 "editDiary" Notification를 관찰하는 옵져버가 추가가 되고요, 작성화면에서 수정된 Diary 객체가 NotificationCenter를 통해서 포스트될 때 editDiaryNotification 메서드가 호출되게 된다.
         
         self.navigationController?.pushViewController(writeDiaryViewController, animated: true)
     }
@@ -60,5 +76,15 @@ class DiaryDetailViewController: UIViewController {
         self.delegate?.didSelectDelete(indexPath: indexPath)
         
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    /*
+     deinit이란
+     deinitialization 소멸자
+     소멸자는 클래스의 인스턴스가 메모리에서 해제될 떄 호출되는 함수이다.
+     swift의 소멸자는 구조체가 아닌 클래스에서만 사용 가능하다.
+     */
+    deinit {
+        NotificationCenter.default.removeObserver(self)//인스턴스가 소멸될 때 해당 인스터스에 추가된 옵져버가 모두 지워지게 한다.
     }
 }

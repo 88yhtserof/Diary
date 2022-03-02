@@ -92,6 +92,14 @@ class WriteDiaryViewController: UIViewController {
         //dateTextField는 다른 텍스트필드와 다르게 키보드가 아닌 DatePicker가 작동되므로 .editngChange 이벤트가 발생하지 않는다. 따라서 DatePicker가 변했을 때 .editChange 이벤트를 직접 발생시켜줘야 한다.
     }
     
+    /*
+     Ntification Center
+     등록된 이벤트가 발생하면 해당 이벤트들에 대한 행동을 취하는 것.
+     한 마디로 앱 내 아무 곳에서나 메세지를 던지면 앱 내 아무 곳에서나 이 메세지를 받을 수 있게 하는 것이 역할
+     이벤트 버스
+     이벤트는 포스트라는 메서드를 이용해서 이벤트들을 전송을 하고, 이벤트를 받으려면 옵져버를 등록해서 포스트(?) 이벤트를 전달받을 수 있다
+     */
+    
     //등록 버튼의 액션 함수
     @IBAction func tapConfirmButton(_ sender: UIBarButtonItem) {
         //등록 버튼을 누르면 입력받은 텍스트들을 이용해 Diary 객체를 생성하여 delegate에 정의한 didSelectReigster를 생성한 diary를 파라미터로 호출한다.
@@ -100,7 +108,18 @@ class WriteDiaryViewController: UIViewController {
         guard let date = self.diaryDate else {return}
         let diary = Diary(title: title, contents: contents, date: date, isStar: false)
         
-        self.delegate?.didSelectReigster(diary: diary)
+        switch self.diaryEditorMode {
+        case .new:
+            self.delegate?.didSelectReigster(diary: diary)
+        case let .edit(indexPath, _):
+            NotificationCenter.default.post(name: NSNotification.Name("editDiary"),
+                                            object: diary,//NotificationCenter를 통해 전달할 객체를 넘겨준다.
+                                            userInfo: [
+                                                "indexPath.row": indexPath.row
+                                            ])//Notification과 관련된 값을 넘겨줄 수 있다. 컬렉션뷰 수정을 위한 indexPath를 넘겨준다.딕셔너리 타입으로 넘겨준다.
+            //name 파라미터에는 Notification의 이름을 적어주면 되는데, 이 이름을 가지고 옵져버에서 설정한 이름의 Notification이벤트가 발생했는지 관찰한다.
+            //이렇게 되면 수정버튼을 눌렀을 때 NotificationCenter가 "editDiary"라는 Notification 키를 옵져빙하는 곳에 수정된 Diary객체를 전달하게 된다.
+        }
         self.navigationController?.popViewController(animated: true) //이전 화면으로 돌아가기
     }
     
