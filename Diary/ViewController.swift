@@ -28,6 +28,16 @@ class ViewController: UIViewController {
                                                selector: #selector(editDiaryNotification(_:)), //옵져버가 이벤트를 감지했을 때 호출될 메서드
                                                name: NSNotification.Name("editDiary"), //감지할 이벤트 이름
                                                object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(starDiaryNotification(_:)),
+            name: NSNotification.Name("starDiary"),
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(deleteDiaryNotification(_:)),
+            name: NSNotification.Name("deleteDiary"),
+            object: nil)
     }
     
     //collectionView의 속성을 설정하는 메서드
@@ -50,6 +60,19 @@ class ViewController: UIViewController {
         }
         
         self.collectionView.reloadData() //수정된 리스트에 맞게 컬렉션 뷰도 수정한다.
+    }
+    
+    @objc func starDiaryNotification(_ notification: Notification){
+        guard let starDiary = notification.object as? [String:Any] else {return}
+        guard let isStar = starDiary["isStar"] as? Bool else {return} //딕셔너리에 "isStar"키를 가지고 값을 얻어낸다. Any 타입이므로 Bool 타입으로 타입 캐스팅해준다.
+        guard let indexPath = starDiary["indexPath"] as? IndexPath else {return}
+        self.diaryList[indexPath.row].isStar = isStar
+    }
+    
+    @objc func deleteDiaryNotification(_ notification: Notification) {
+        guard let indexPath = notification.object as? IndexPath else {return}
+        self.diaryList.remove(at: indexPath.row)
+        self.collectionView.deleteItems(at: [indexPath]) //CollectionView에서도 지우기
     }
     
     //화면 전환 바로 직전에 호출된다.
@@ -146,7 +169,7 @@ extension ViewController: UICollectionViewDelegate {
         diaryDetailViewController.diary = diary
         diaryDetailViewController.indexPath = indexPath
         //DiaryDetailViewController로 화면 전환하기 직전에 해당 뷰컨트롤러의 프로퍼티에 접근하여 delegate 임명하기
-        diaryDetailViewController.delegate = self
+        //diaryDetailViewController.delegate = self
         
         self.navigationController?.pushViewController(diaryDetailViewController, animated: true)
     }
@@ -165,13 +188,13 @@ extension ViewController: WriteDiaryViewDelegate {
 }
 
 //DiaryDetailViewControllerDelegate를 통해 데이터 전달받기
-extension ViewController: DiaryDetailViewControllerDelegate {
-    func didSelectDelete(indexPath: IndexPath) {
-        self.diaryList.remove(at: indexPath.row) //리스트에서도 지우고
-        self.collectionView.deleteItems(at: [indexPath])//collectionView에서도 지우기
-    }
-    
-    func didSelectStar(indexPath: IndexPath, isStar: Bool) {
-        self.diaryList[indexPath.row].isStar = isStar
-    }
-}
+//extension ViewController: DiaryDetailViewControllerDelegate {
+//    func didSelectDelete(indexPath: IndexPath) {
+//        self.diaryList.remove(at: indexPath.row) //리스트에서도 지우고
+//        self.collectionView.deleteItems(at: [indexPath])//collectionView에서도 지우기
+//    }
+//    
+//    func didSelectStar(indexPath: IndexPath, isStar: Bool) {
+//        self.diaryList[indexPath.row].isStar = isStar
+//    }
+//}

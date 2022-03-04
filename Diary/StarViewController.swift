@@ -15,12 +15,32 @@ class StarViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureCollectionView()
+        self.loadStarDiaryList()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(editDiaryNotificarion(_:)),
+            name: NSNotification.Name("editDiary"),
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(starDiaryNotification(_:)),
+            name: NSNotification.Name("starDiary"),
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(deleteDiaryNotification(_:)),
+            name: NSNotification.Name("deleteDiary"),
+            object: nil
+        )
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.loadStarDiaryList()
-    }
+    //데이터가 NotificationCenter로 동기화되면 데이터를 불러오는 시점을 viewDidLoad로 변경해도 된다.
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        self.loadStarDiaryList()
+//    }
     
     //즐겨찾기 일기 리스트를 CollectionView로 나타내기
     private func configureCollectionView(){
@@ -54,8 +74,44 @@ class StarViewController: UIViewController {
         }).sorted(by: {
             $0.date.compare($1.date) == .orderedDescending //날짜 내림차순 정렬, 즉 최신순
         })
+        //데이터가 NotificationCenter로 동기화되면 데이터를 불러오는 시점을 viewDidLoad로 변경해도 된다.
+        //self.collectionView.reloadData()
+    }
+    
+    @objc func editDiaryNotificarion(_ notification: Notification){
+        guard let diary = notification.object as? Diary else {return}
+        guard let row = notification.userInfo?["indexPath.row"] as? Int else {return} //"indexPath.row" 키를 사용해 값 받기
+        self.diaryList[row] = diary
+        //날짜를 수정했을 수도 있으니 재정렬
+        self.diaryList = self.diaryList.sorted(by: {
+            $0.date.compare($1.date) == .orderedDescending //내림차순, 즉 최신 일기 우선
+        })
+        self.collectionView.reloadData() //CollectionView 재로드
+    }
+    
+    @objc func starDiaryNotification(_ notification: Notification){
+        guard let starDiary = notification.object as? [String: Any] else {return}
+        guard let diary = starDiary["diary"] as? Diary else {return}
+        guard let isStar = starDiary["isStar"] as? Bool else {return}
+        guard let indexPath = starDiary["indexPath"] as? IndexPath else {return}
         
-        self.collectionView.reloadData()
+        //즐겨찾기 모드 설정, 해제 여부에 따라사 리스트 업데이트
+        if isStar {//즐겨찾기 설정됨
+            self.diaryList.append(diary)
+            self.diaryList = self.diaryList.sorted(by: {
+                $0.date.compare($1.date) == .orderedDescending //내림차순, 즉 최신 일기 우선
+            })
+            self.collectionView.reloadData()
+        }else {//즐겨찾기 해제됨
+            self.diaryList.remove(at: indexPath.row) //리스트에서 제거
+            self.collectionView.deleteItems(at: [indexPath]) //CollectionView에서도 제거
+        }
+    }
+    
+    @objc func deleteDiaryNotification(_ notification: Notification){
+        guard let indexPath = notification.object as? IndexPath else {return}
+        self.diaryList.remove(at: indexPath.row)
+        self.collectionView.deleteItems(at: [indexPath])
     }
 }
 

@@ -9,10 +9,10 @@ import UIKit
 
 //일기장의 특정 일기 삭제하기 위한 Delegate 패턴
 //나중에 즐겨찾기 구현 시 이 삭제 기능은 Notification Center기능으로 대체될 예정
-protocol DiaryDetailViewControllerDelegate: AnyObject {
-    func didSelectDelete(indexPath: IndexPath)
-    func didSelectStar(indexPath: IndexPath, isStar: Bool) //즐겨찾기 여부를 전달받을 수 있는 메서드
-}
+//protocol DiaryDetailViewControllerDelegate: AnyObject {
+//    func didSelectDelete(indexPath: IndexPath)
+//    //func didSelectStar(indexPath: IndexPath, isStar: Bool) //즐겨찾기 여부를 전달받을 수 있는 메서드
+//}
 
 class DiaryDetailViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
@@ -20,7 +20,7 @@ class DiaryDetailViewController: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     var starButton: UIBarButtonItem?
     
-    weak var delegate: DiaryDetailViewControllerDelegate?
+    //weak var delegate: DiaryDetailViewControllerDelegate?
     
     var diary: Diary?
     var indexPath: IndexPath?
@@ -89,12 +89,31 @@ class DiaryDetailViewController: UIViewController {
             self.starButton?.image = UIImage(systemName: "star.fill")
         }
         self.diary?.isStar = !isStar //현재 설정된 값의 반대로 설정
-        self.delegate?.didSelectStar(indexPath: indexPath, isStar: self.diary?.isStar ?? false) //즐겨찾기 상태 전달하기
+        //1:1 데이터 전달을 하는 Delegate 패턴이 아닌 NotificationCenter를 사용해 데이터를 전달하기
+        NotificationCenter.default.post(
+            name: NSNotification.Name("starDiary"),
+            object: [
+                "diary": self.diary,
+                "isStar": self.diary?.isStar ?? false,
+                "indexPath": indexPath
+            ],
+            userInfo: nil
+        )
+        
+        //self.delegate?.didSelectStar(indexPath: indexPath, isStar: self.diary?.isStar ?? false) //즐겨찾기 상태 전달하기
     }
     
     @IBAction func tapDeleteButton(_ sender: UIButton) {
         guard let indexPath = self.indexPath else {return}
-        self.delegate?.didSelectDelete(indexPath: indexPath)
+        
+        //1:1 데이터 전달만 가능했던 Delegate 패턴 대신 NotificationCenter를 이용해 데이터 전달
+        NotificationCenter.default.post(
+            name: NSNotification.Name("deleteDiary"),
+            object: indexPath,
+            userInfo: nil
+        )
+        
+       // self.delegate?.didSelectDelete(indexPath: indexPath)
         
         self.navigationController?.popViewController(animated: true)
     }
