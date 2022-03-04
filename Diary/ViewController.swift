@@ -170,4 +170,8 @@ extension ViewController: DiaryDetailViewControllerDelegate {
         self.diaryList.remove(at: indexPath.row) //리스트에서도 지우고
         self.collectionView.deleteItems(at: [indexPath])//collectionView에서도 지우기
     }
+    
+    func didSelectStar(indexPath: IndexPath, isStar: Bool) {
+        self.diaryList[indexPath.row].isStar = isStar
+    }
 }

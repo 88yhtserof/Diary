@@ -11,12 +11,15 @@ import UIKit
 //나중에 즐겨찾기 구현 시 이 삭제 기능은 Notification Center기능으로 대체될 예정
 protocol DiaryDetailViewControllerDelegate: AnyObject {
     func didSelectDelete(indexPath: IndexPath)
+    func didSelectStar(indexPath: IndexPath, isStar: Bool) //즐겨찾기 여부를 전달받을 수 있는 메서드
 }
 
 class DiaryDetailViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var contentsTextView: UITextView!
     @IBOutlet weak var dateLabel: UILabel!
+    var starButton: UIBarButtonItem?
+    
     weak var delegate: DiaryDetailViewControllerDelegate?
     
     var diary: Diary?
@@ -35,6 +38,10 @@ class DiaryDetailViewController: UIViewController {
         self.titleLabel.text = diary.title
         self.contentsTextView.text = diary.contents
         self.dateLabel.text = self.dateToString(date: diary.date)
+        self.starButton = UIBarButtonItem(image: nil, style: .plain, target: self, action: #selector(tapStarButton)) //UIBarButtonItem 생성, 버튼 tap 시 action 실행
+        self.starButton?.image = diary.isStar ? UIImage(systemName: "star.fill") : UIImage(systemName: "star") //즐겨찾기 설정 유무에 따라 이미지 설정
+        self.starButton?.tintColor = .orange
+        self.navigationItem.rightBarButtonItem = self.starButton //NavigationBar에 즐겨찾기 버튼 추가
     }
     
     //Date타입을 String타입으로 전환하는 메서드
@@ -69,6 +76,20 @@ class DiaryDetailViewController: UIViewController {
         //이렇게 수정 버튼을 클릭 했을 때 "editDiary" Notification를 관찰하는 옵져버가 추가가 되고요, 작성화면에서 수정된 Diary 객체가 NotificationCenter를 통해서 포스트될 때 editDiaryNotification 메서드가 호출되게 된다.
         
         self.navigationController?.pushViewController(writeDiaryViewController, animated: true)
+    }
+    
+    @objc func tapStarButton(){
+        guard let isStar = self.diary?.isStar else {return}
+        guard let indexPath = indexPath else {return}
+        
+        //버튼 클릭 시 isStar의 Bool값의 반대로 이미지 설정
+        if isStar { //true, 즉 즐겨찾기되어있다면 즐겨찾기 해제해준다.
+            self.starButton?.image = UIImage(systemName: "star")
+        }else{//false라면 즐겨찾기 설정해준다.
+            self.starButton?.image = UIImage(systemName: "star.fill")
+        }
+        self.diary?.isStar = !isStar //현재 설정된 값의 반대로 설정
+        self.delegate?.didSelectStar(indexPath: indexPath, isStar: self.diary?.isStar ?? false) //즐겨찾기 상태 전달하기
     }
     
     @IBAction func tapDeleteButton(_ sender: UIButton) {
