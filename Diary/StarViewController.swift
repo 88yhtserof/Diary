@@ -81,3 +81,14 @@ extension StarViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: UIScreen.main.bounds.width - 20, height: 80)
     }
 }
+
+extension StarViewController: UICollectionViewDelegate{
+    //cell 클릭 시 해당 cell의 상세 화면으로 전환, 즉 해당 cell의 일기 데이터를 넘겨준다.
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let diaryDetailViewController = self.storyboard?.instantiateViewController(withIdentifier: "DiaryDetailViewController") as? DiaryDetailViewController else {return}
+        diaryDetailViewController.diary = self.diaryList[indexPath.row]
+        diaryDetailViewController.indexPath = indexPath
+        
+        self.navigationController?.pushViewController(diaryDetailViewController, animated: true)
+    }
+}
