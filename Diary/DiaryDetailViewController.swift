@@ -46,7 +46,7 @@ class DiaryDetailViewController: UIViewController {
         self.dateLabel.text = self.dateToString(date: diary.date)
         self.starButton = UIBarButtonItem(image: nil, style: .plain, target: self, action: #selector(tapStarButton)) //UIBarButtonItem 생성, 버튼 tap 시 action 실행
         self.starButton?.image = diary.isStar ? UIImage(systemName: "star.fill") : UIImage(systemName: "star") //즐겨찾기 설정 유무에 따라 이미지 설정
-        self.starButton?.tintColor = .orange
+        self.starButton?.tintColor = .darkGray
         self.navigationItem.rightBarButtonItem = self.starButton //NavigationBar에 즐겨찾기 버튼 추가
     }
     

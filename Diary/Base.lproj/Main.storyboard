@@ -8,6 +8,14 @@
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="NanumBaReunHiPi.ttf">
+            <string>NanumBaReunHiPi</string>
+        </array>
+        <array key="NanumBarunpenR.ttf">
+            <string>NanumBarunpen</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -35,14 +43,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="제목" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LdS-GF-ho6">
-                                                    <rect key="frame" x="12" y="12" width="156" height="134"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                    <rect key="frame" x="12" y="12" width="156" height="144"/>
+                                                    <fontDescription key="fontDescription" name="NanumBaReunHiPi" family="나눔손글씨 바른히피" pointSize="30"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="20.09.03 토" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="keS-Fh-sge">
-                                                    <rect key="frame" x="12" y="158" width="156" height="30"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
+                                                    <rect key="frame" x="12" y="168" width="156" height="20"/>
+                                                    <fontDescription key="fontDescription" name="NanumBaReunHiPi" family="나눔손글씨 바른히피" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -98,42 +106,42 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="제목" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NQJ-I4-POT">
-                                <rect key="frame" x="24" y="112" width="366" height="21"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                <nil key="textColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오늘의 주제" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NQJ-I4-POT">
+                                <rect key="frame" x="24" y="112" width="366" height="22"/>
+                                <fontDescription key="fontDescription" name="NanumBarunpen" family="NanumBarunpen" pointSize="17"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="D13-Fn-nlc">
-                                <rect key="frame" x="24" y="145" width="366" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <rect key="frame" x="24" y="146" width="366" height="38.5"/>
+                                <fontDescription key="fontDescription" name="NanumBaReunHiPi" family="나눔손글씨 바른히피" pointSize="25"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내용" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WKt-7k-aev">
-                                <rect key="frame" x="24" y="203" width="366" height="21"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                <nil key="textColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이야기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WKt-7k-aev">
+                                <rect key="frame" x="24" y="208.5" width="366" height="22"/>
+                                <fontDescription key="fontDescription" name="NanumBarunpen" family="NanumBarunpen" pointSize="17"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="tKv-cD-SqH">
-                                <rect key="frame" x="24" y="236" width="366" height="100"/>
+                                <rect key="frame" x="24" y="242.5" width="366" height="100"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="QkX-mA-igN"/>
                                 </constraints>
                                 <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="NanumBaReunHiPi" family="나눔손글씨 바른히피" pointSize="23"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="날짜" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o8b-2a-vib">
-                                <rect key="frame" x="24" y="360" width="366" height="21"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <rect key="frame" x="24" y="366.5" width="366" height="22"/>
+                                <fontDescription key="fontDescription" name="NanumBarunpen" family="NanumBarunpen" pointSize="17"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IVV-g3-adt">
-                                <rect key="frame" x="24" y="393" width="366" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <rect key="frame" x="24" y="400.5" width="366" height="34"/>
+                                <fontDescription key="fontDescription" name="NanumBaReunHiPi" family="나눔손글씨 바른히피" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
@@ -178,7 +186,7 @@
             </objects>
             <point key="canvasLocation" x="2754" y="52"/>
         </scene>
-        <!--Star View Controller-->
+        <!--즐겨찾기-->
         <scene sceneID="jal-qi-Sep">
             <objects>
                 <viewController id="Guu-ro-Nwb" customClass="StarViewController" customModule="Diary" customModuleProvider="target" sceneMemberID="viewController">
@@ -204,17 +212,17 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="sTz-bQ-jAN">
-                                                    <rect key="frame" x="24" y="13.5" width="366" height="53"/>
+                                                    <rect key="frame" x="24" y="9.5" width="366" height="61"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="제목" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WCI-TO-6AH">
-                                                            <rect key="frame" x="0.0" y="0.0" width="366" height="20.5"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="366" height="29"/>
+                                                            <fontDescription key="fontDescription" name="NanumBaReunHiPi" family="나눔손글씨 바른히피" pointSize="25"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nuy-le-e0o" customClass="S">
-                                                            <rect key="frame" x="0.0" y="32.5" width="366" height="20.5"/>
-                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                            <rect key="frame" x="0.0" y="41" width="366" height="20"/>
+                                                            <fontDescription key="fontDescription" name="NanumBaReunHiPi" family="나눔손글씨 바른히피" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -245,7 +253,7 @@
                             <constraint firstItem="FxI-DP-Ddi" firstAttribute="leading" secondItem="qp8-9Q-qfY" secondAttribute="leading" id="tRu-sv-4L3"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="BEC-gR-ipE"/>
+                    <navigationItem key="navigationItem" title="즐겨찾기" id="BEC-gR-ipE"/>
                     <connections>
                         <outlet property="collectionView" destination="FxI-DP-Ddi" id="QW6-QN-N8q"/>
                     </connections>
@@ -263,72 +271,70 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="lhe-i4-plt">
-                                <rect key="frame" x="24" y="68" width="366" height="53"/>
+                                <rect key="frame" x="24" y="68" width="366" height="63"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="제목" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eps-C0-9Zi">
-                                        <rect key="frame" x="0.0" y="0.0" width="366" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                        <nil key="textColor"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오늘의 이야기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eps-C0-9Zi">
+                                        <rect key="frame" x="0.0" y="0.0" width="366" height="22"/>
+                                        <fontDescription key="fontDescription" name="NanumBarunpen" family="NanumBarunpen" pointSize="17"/>
+                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3H8-xo-Yft">
-                                        <rect key="frame" x="0.0" y="32.5" width="366" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="34" width="366" height="29"/>
+                                        <fontDescription key="fontDescription" name="NanumBaReunHiPi" family="나눔손글씨 바른히피" pointSize="25"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내용" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="15f-dM-jWY">
-                                <rect key="frame" x="24" y="145" width="366" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Shm-dL-1ID">
-                                <rect key="frame" x="20" y="177.5" width="374" height="150"/>
+                                <rect key="frame" x="20" y="161" width="374" height="150"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="gfY-89-RQc"/>
                                 </constraints>
                                 <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="NanumBaReunHiPi" family="나눔손글씨 바른히피" pointSize="23"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="bPH-18-hkW">
-                                <rect key="frame" x="24" y="351.5" width="366" height="53"/>
+                                <rect key="frame" x="24" y="335" width="366" height="57.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="날짜" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XPL-qj-5Pu">
-                                        <rect key="frame" x="0.0" y="0.0" width="366" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                        <nil key="textColor"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="366" height="22"/>
+                                        <fontDescription key="fontDescription" name="NanumBarunpen" family="NanumBarunpen" pointSize="17"/>
+                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L5G-V8-l1z">
-                                        <rect key="frame" x="0.0" y="32.5" width="366" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="34" width="366" height="23.5"/>
+                                        <fontDescription key="fontDescription" name="NanumBaReunHiPi" family="나눔손글씨 바른히피" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="g1N-HF-E98">
-                                <rect key="frame" x="133.5" y="428.5" width="147" height="31"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="g1N-HF-E98">
+                                <rect key="frame" x="160.5" y="422.5" width="93" height="38"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qN9-zA-6u2">
-                                        <rect key="frame" x="0.0" y="0.0" width="48.5" height="31"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="수정"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="31" height="38"/>
+                                        <fontDescription key="fontDescription" name="NanumBarunpen" family="NanumBarunpen" pointSize="20"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="수정">
+                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
                                         <connections>
                                             <action selector="tapEditButton:" destination="LrZ-Tq-8Xe" eventType="touchUpInside" id="0F4-Ec-1g7"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="55Y-dL-FmE">
-                                        <rect key="frame" x="98.5" y="0.0" width="48.5" height="31"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="삭제">
-                                            <color key="baseForegroundColor" systemColor="systemRedColor"/>
-                                        </buttonConfiguration>
+                                        <rect key="frame" x="61" y="0.0" width="32" height="38"/>
+                                        <fontDescription key="fontDescription" name="NanumBarunpen" family="NanumBarunpen" pointSize="20"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="삭제">
+                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
                                         <connections>
                                             <action selector="tapDeleteButton:" destination="LrZ-Tq-8Xe" eventType="touchUpInside" id="K9j-ef-CCC"/>
                                         </connections>
@@ -339,18 +345,15 @@
                         <viewLayoutGuide key="safeArea" id="6vW-1h-e5S"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="15f-dM-jWY" firstAttribute="top" secondItem="lhe-i4-plt" secondAttribute="bottom" constant="24" id="ATV-RI-Wic"/>
+                            <constraint firstItem="Shm-dL-1ID" firstAttribute="top" secondItem="lhe-i4-plt" secondAttribute="bottom" constant="30" id="9RA-SN-0Dv"/>
                             <constraint firstItem="6vW-1h-e5S" firstAttribute="trailing" secondItem="Shm-dL-1ID" secondAttribute="trailing" constant="20" id="Gb9-dd-rpI"/>
-                            <constraint firstItem="6vW-1h-e5S" firstAttribute="trailing" secondItem="15f-dM-jWY" secondAttribute="trailing" constant="24" id="HAG-V8-yIT"/>
                             <constraint firstItem="g1N-HF-E98" firstAttribute="centerX" secondItem="bPH-18-hkW" secondAttribute="centerX" id="MdQ-jy-few"/>
                             <constraint firstItem="lhe-i4-plt" firstAttribute="leading" secondItem="6vW-1h-e5S" secondAttribute="leading" constant="24" id="Nr1-h5-t34"/>
                             <constraint firstItem="lhe-i4-plt" firstAttribute="top" secondItem="6vW-1h-e5S" secondAttribute="top" constant="24" id="TSN-A9-acc"/>
-                            <constraint firstItem="15f-dM-jWY" firstAttribute="leading" secondItem="6vW-1h-e5S" secondAttribute="leading" constant="24" id="Xoy-LU-WxZ"/>
                             <constraint firstItem="6vW-1h-e5S" firstAttribute="trailing" secondItem="bPH-18-hkW" secondAttribute="trailing" constant="24" id="Yfo-7I-P57"/>
                             <constraint firstItem="6vW-1h-e5S" firstAttribute="trailing" secondItem="lhe-i4-plt" secondAttribute="trailing" constant="24" id="jdO-xS-3VO"/>
-                            <constraint firstItem="Shm-dL-1ID" firstAttribute="top" secondItem="15f-dM-jWY" secondAttribute="bottom" constant="12" id="lDJ-gQ-k5R"/>
                             <constraint firstItem="bPH-18-hkW" firstAttribute="top" secondItem="Shm-dL-1ID" secondAttribute="bottom" constant="24" id="u6L-eC-zkz"/>
-                            <constraint firstItem="g1N-HF-E98" firstAttribute="top" secondItem="bPH-18-hkW" secondAttribute="bottom" constant="24" id="v6O-ob-bHK"/>
+                            <constraint firstItem="g1N-HF-E98" firstAttribute="top" secondItem="bPH-18-hkW" secondAttribute="bottom" constant="30" id="v6O-ob-bHK"/>
                             <constraint firstItem="bPH-18-hkW" firstAttribute="leading" secondItem="6vW-1h-e5S" secondAttribute="leading" constant="24" id="v6W-Mt-2Vu"/>
                             <constraint firstItem="Shm-dL-1ID" firstAttribute="leading" secondItem="6vW-1h-e5S" secondAttribute="leading" constant="20" id="yU3-Oi-JFw"/>
                         </constraints>
@@ -374,6 +377,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
                         <segue destination="avc-NX-tKr" kind="relationship" relationship="viewControllers" id="rBm-Ai-RzR"/>
@@ -384,15 +388,16 @@
             </objects>
             <point key="canvasLocation" x="28.985507246376812" y="51.5625"/>
         </scene>
-        <!--일기장-->
+        <!--Navigation Controller-->
         <scene sceneID="LUm-rw-25r">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="avc-NX-tKr" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="일기장" image="folder" catalog="system" selectedImage="folder.fill" id="X0P-0x-UaB"/>
+                    <tabBarItem key="tabBarItem" title="" image="book.closed" catalog="system" selectedImage="book.closed.fill" id="X0P-0x-UaB"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="C0r-Hz-c7P">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -403,15 +408,16 @@
             </objects>
             <point key="canvasLocation" x="939.13043478260875" y="51.5625"/>
         </scene>
-        <!--즐겨찾기-->
+        <!--Navigation Controller-->
         <scene sceneID="GQl-pR-5JC">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qsZ-dI-04q" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="즐겨찾기" image="star" catalog="system" selectedImage="star.fill" id="Djt-nO-dfU"/>
+                    <tabBarItem key="tabBarItem" title="" image="star" catalog="system" selectedImage="star.fill" id="Djt-nO-dfU"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="GwR-Xw-EdY">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -424,8 +430,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="folder" catalog="system" width="128" height="97"/>
-        <image name="folder.fill" catalog="system" width="128" height="97"/>
+        <image name="book.closed" catalog="system" width="115" height="128"/>
+        <image name="book.closed.fill" catalog="system" width="115" height="128"/>
         <image name="star" catalog="system" width="128" height="116"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <systemColor name="labelColor">
@@ -433,9 +439,6 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

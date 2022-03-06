@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A26D07E27D4C6910068D25C /* NanumBaReunHiPi.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9A26D07927D4C6910068D25C /* NanumBaReunHiPi.ttf */; };
+		9A26D08727D4C75D0068D25C /* NanumBarunpenR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9A26D08527D4C75D0068D25C /* NanumBarunpenR.ttf */; };
+		9A26D08827D4C75D0068D25C /* NanumBarunpenB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9A26D08627D4C75D0068D25C /* NanumBarunpenB.ttf */; };
 		9ADDF84227CCC051009AD4C5 /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADDF84127CCC051009AD4C5 /* Diary.swift */; };
 		9AED33DD27CBA0EC00A447E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AED33DC27CBA0EC00A447E7 /* AppDelegate.swift */; };
 		9AED33DF27CBA0EC00A447E7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AED33DE27CBA0EC00A447E7 /* SceneDelegate.swift */; };
@@ -42,6 +45,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9A26D07927D4C6910068D25C /* NanumBaReunHiPi.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumBaReunHiPi.ttf; sourceTree = "<group>"; };
+		9A26D08527D4C75D0068D25C /* NanumBarunpenR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumBarunpenR.ttf; sourceTree = "<group>"; };
+		9A26D08627D4C75D0068D25C /* NanumBarunpenB.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumBarunpenB.ttf; sourceTree = "<group>"; };
 		9ADDF84127CCC051009AD4C5 /* Diary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diary.swift; sourceTree = "<group>"; };
 		9AED33D927CBA0EC00A447E7 /* Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AED33DC27CBA0EC00A447E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +94,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9A26D07427D4C1C40068D25C /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				9A26D08627D4C75D0068D25C /* NanumBarunpenB.ttf */,
+				9A26D08527D4C75D0068D25C /* NanumBarunpenR.ttf */,
+				9A26D07927D4C6910068D25C /* NanumBaReunHiPi.ttf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
 		9AED33D027CBA0EC00A447E7 = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +127,7 @@
 		9AED33DB27CBA0EC00A447E7 /* Diary */ = {
 			isa = PBXGroup;
 			children = (
+				9A26D07427D4C1C40068D25C /* Font */,
 				9AED33DC27CBA0EC00A447E7 /* AppDelegate.swift */,
 				9AED33DE27CBA0EC00A447E7 /* SceneDelegate.swift */,
 				9AED33E027CBA0EC00A447E7 /* ViewController.swift */,
@@ -251,7 +268,10 @@
 			files = (
 				9AED33E927CBA0EC00A447E7 /* LaunchScreen.storyboard in Resources */,
 				9AED33E627CBA0EC00A447E7 /* Assets.xcassets in Resources */,
+				9A26D08827D4C75D0068D25C /* NanumBarunpenB.ttf in Resources */,
 				9AED33E427CBA0EC00A447E7 /* Main.storyboard in Resources */,
+				9A26D08727D4C75D0068D25C /* NanumBarunpenR.ttf in Resources */,
+				9A26D07E27D4C6910068D25C /* NanumBaReunHiPi.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
