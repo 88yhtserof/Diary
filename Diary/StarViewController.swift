@@ -63,12 +63,19 @@ class StarViewController: UIViewController {
         let userDefaults = UserDefaults.standard
         guard let data = userDefaults.object(forKey: "DiaryList") as? [[String: Any]] else {return} //object에서 Any 타입을 반환하기 때문에 딕셔너리 타입으로 타입 캐스팅한다. guard문으로 타입 캐스팅 실패할 경우를 대비한다.
         self.diaryList = data.compactMap{//불러온 데이터를 Diary 타입이 되도록 맵핑해준다.
+            guard let uuidString = $0["uuidString"] as? String else {return nil}
             guard let title = $0["title"] as? String else {return nil}
             guard let contents = $0["contents"] as? String else {return nil}
             guard let date = $0["date"] as? Date else {return nil}
             guard let isStar = $0["isStar"] as? Bool else {return nil}
             
-            return Diary(title: title, contents: contents, date: date, isStar: isStar)
+            return Diary(
+                uuidString: uuidString,
+                title: title,
+                contents: contents,
+                date: date,
+                isStar: isStar
+            )
         }.filter({//주어진 조건을 만족하는 원소 배열을 반환한다.
             $0.isStar == true //즐겨찾기 설정되어있는 일기만
         }).sorted(by: {
@@ -80,8 +87,8 @@ class StarViewController: UIViewController {
     
     @objc func editDiaryNotificarion(_ notification: Notification){
         guard let diary = notification.object as? Diary else {return}
-        guard let row = notification.userInfo?["indexPath.row"] as? Int else {return} //"indexPath.row" 키를 사용해 값 받기
-        self.diaryList[row] = diary
+        guard let index = self.diaryList.firstIndex(where: {$0.uuidString == diary.uuidString}) else {return} //해당 일기의 UUID와 동일한 UUID를 가진 일기를 찾아 인덱스 반환
+        self.diaryList[index] = diary
         //날짜를 수정했을 수도 있으니 재정렬
         self.diaryList = self.diaryList.sorted(by: {
             $0.date.compare($1.date) == .orderedDescending //내림차순, 즉 최신 일기 우선
@@ -93,7 +100,7 @@ class StarViewController: UIViewController {
         guard let starDiary = notification.object as? [String: Any] else {return}
         guard let diary = starDiary["diary"] as? Diary else {return}
         guard let isStar = starDiary["isStar"] as? Bool else {return}
-        guard let indexPath = starDiary["indexPath"] as? IndexPath else {return}
+        guard let uuidString = starDiary["uuidString"] as? String else {return}
         
         //즐겨찾기 모드 설정, 해제 여부에 따라사 리스트 업데이트
         if isStar {//즐겨찾기 설정됨
@@ -103,15 +110,17 @@ class StarViewController: UIViewController {
             })
             self.collectionView.reloadData()
         }else {//즐겨찾기 해제됨
-            self.diaryList.remove(at: indexPath.row) //리스트에서 제거
-            self.collectionView.deleteItems(at: [indexPath]) //CollectionView에서도 제거
+            guard let index = self.diaryList.firstIndex(where: {$0.uuidString == uuidString}) else {return}
+            self.diaryList.remove(at: index) //리스트에서 제거
+            self.collectionView.deleteItems(at: [IndexPath(row: index, section: 0)]) //CollectionView에서도 제거
         }
     }
     
     @objc func deleteDiaryNotification(_ notification: Notification){
-        guard let indexPath = notification.object as? IndexPath else {return}
-        self.diaryList.remove(at: indexPath.row)
-        self.collectionView.deleteItems(at: [indexPath])
+        guard let uuidString = notification.object as? String else {return}
+        guard let index = self.diaryList.firstIndex(where: {$0.uuidString == uuidString}) else {return}
+        self.diaryList.remove(at: index)
+        self.collectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
     }
 }
 

@@ -52,8 +52,8 @@ class ViewController: UIViewController {
     
     @objc func editDiaryNotification(_ notification:Notification){
         guard let diary = notification.object as? Diary else {return}
-        guard let row = notification.userInfo?["indexPath.row"] as? Int else {return}
-        self.diaryList[row] = diary
+        guard let index = self.diaryList.firstIndex(where: { $0.uuidString == diary.uuidString}) else {return}//해당 일기의 UUID와 동일한 값을 가진 가장 첫 번째 일기를 찾아 인덱스 반환
+        self.diaryList[index] = diary
         //날짜가 수정되었을 수도 있으니 다시 내림차순 (최신 일기가 상단에) 정렬
         self.diaryList = self.diaryList.sorted{
             $0.date.compare($1.date) == .orderedDescending //내림차순정렬
@@ -65,14 +65,16 @@ class ViewController: UIViewController {
     @objc func starDiaryNotification(_ notification: Notification){
         guard let starDiary = notification.object as? [String:Any] else {return}
         guard let isStar = starDiary["isStar"] as? Bool else {return} //딕셔너리에 "isStar"키를 가지고 값을 얻어낸다. Any 타입이므로 Bool 타입으로 타입 캐스팅해준다.
-        guard let indexPath = starDiary["indexPath"] as? IndexPath else {return}
-        self.diaryList[indexPath.row].isStar = isStar
+        guard let uuidString = starDiary["uuidString"] as? String else {return}
+        guard let index = self.diaryList.firstIndex(where: {$0.uuidString == uuidString}) else {return}
+        self.diaryList[index].isStar = isStar
     }
     
     @objc func deleteDiaryNotification(_ notification: Notification) {
-        guard let indexPath = notification.object as? IndexPath else {return}
-        self.diaryList.remove(at: indexPath.row)
-        self.collectionView.deleteItems(at: [indexPath]) //CollectionView에서도 지우기
+        guard let uuidString = notification.object as? String else {return}
+        guard let index = self.diaryList.firstIndex(where: {$0.uuidString == uuidString}) else {return}
+        self.diaryList.remove(at: index)
+        self.collectionView.deleteItems(at: [IndexPath(row: index, section: 0)]) //단일 섹션이므로 0을 넘겨준다. //CollectionView에서도 지우기
     }
     
     //화면 전환 바로 직전에 호출된다.
@@ -88,6 +90,7 @@ class ViewController: UIViewController {
         //DiaryList를 딕셔너리 형태로 맵핑한다.
         let data = self.diaryList.map{
             [//key:value
+                "uuidString" : $0.uuidString,
                 "title": $0.title,
                 "contents": $0.contents,
                 "date": $0.date,
@@ -105,12 +108,13 @@ class ViewController: UIViewController {
         guard let data = userDefaults.object(forKey: "DiaryList") as? [[String:Any]] else {return} //object는 Any타입으로 반환되기 때문에 딕셔너리 배열형태로 형변환 한다.
         
         self.diaryList = data.compactMap{//nil을 제외한 원소를 맵핑한다.
+            guard let uuidString = $0["uuidString"] as? String else {return nil}
             guard let title = $0["title"] as? String else {return nil} //배열의 원소인 딕셔너리에 title 키를 사용해 value 가져오기. value가 Any 타입이므로 String으로 타입 변환
             guard let contents = $0["contents"] as? String else {return nil}
             guard let date = $0["date"] as? Date else {return nil}
             guard let isStar = $0["isStar"] as? Bool else {return nil}
             
-            return Diary(title: title, contents: contents, date: date, isStar: isStar)
+            return Diary(uuidString: uuidString , title: title, contents: contents, date: date, isStar: isStar)
         }
         
         //목록을 최신 순으로 정렬하기

@@ -29,6 +29,12 @@ class DiaryDetailViewController: UIViewController {
         super.viewDidLoad()
         
         configureView() //상세 뷰 내용 초기화
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(starDiaryNotification(_:)),
+            name: NSNotification.Name("starDiary"),
+            object: nil
+        )
     }
     
     //뷰를 프로퍼티값으로 초기화 시켜주는 메서드
@@ -55,10 +61,21 @@ class DiaryDetailViewController: UIViewController {
     //수정 완료 이벤트 발생 시 호출될 셀렉트 함수
     @objc func editDiaryNotification(_ notification: Notification){
         guard let diary = notification.object as? Diary else {return}//Notification.object 프로퍼티를 통해서 포스트될 때 보낸 객체를 가져올 수 있다.
-        guard let row = notification.userInfo?["indexPath.row"] as? Int else {return} //userInfo 프로퍼티를 통해 포스트될 때 전달된 딕셔너리를 가져올 수 잇다.
         
         self.diary = diary //수정된 객체로 diary를 업데이트하고
         self.configureView() //뷰를 다시 초기화한다.
+    }
+    
+    @objc func starDiaryNotification(_ notification: Notification){
+        guard let starDiary = notification.object as? [String: Any] else {return} //방금 즐겨찾기 표시한 일기
+        guard let isStar = starDiary["isStar"] as? Bool else {return}
+        guard let uuidString = starDiary["uuidString"] as? String else {return}
+        guard let diary = self.diary else {return} //현재 보여지고 있는 일기
+        
+        if diary.uuidString == uuidString {//현재 보여지고 있는 일기의 즐겨찾기 여부가 달라진 경우
+            self.diary?.isStar = isStar //변경된 즐겨찾기 상태로 현재 보여지는 일기 상태 바꾸기
+            self.configureView() //뷰 업데이트
+        }
     }
     
     @IBAction func tapEditButton(_ sender: UIButton) {
@@ -80,7 +97,6 @@ class DiaryDetailViewController: UIViewController {
     
     @objc func tapStarButton(){
         guard let isStar = self.diary?.isStar else {return}
-        guard let indexPath = indexPath else {return}
         
         //버튼 클릭 시 isStar의 Bool값의 반대로 이미지 설정
         if isStar { //true, 즉 즐겨찾기되어있다면 즐겨찾기 해제해준다.
@@ -95,7 +111,7 @@ class DiaryDetailViewController: UIViewController {
             object: [
                 "diary": self.diary,
                 "isStar": self.diary?.isStar ?? false,
-                "indexPath": indexPath
+                "uuidString": diary?.uuidString
             ],
             userInfo: nil
         )
@@ -104,12 +120,12 @@ class DiaryDetailViewController: UIViewController {
     }
     
     @IBAction func tapDeleteButton(_ sender: UIButton) {
-        guard let indexPath = self.indexPath else {return}
+        guard let uuidString = self.diary?.uuidString else {return}
         
         //1:1 데이터 전달만 가능했던 Delegate 패턴 대신 NotificationCenter를 이용해 데이터 전달
         NotificationCenter.default.post(
             name: NSNotification.Name("deleteDiary"),
-            object: indexPath,
+            object: uuidString,
             userInfo: nil
         )
         

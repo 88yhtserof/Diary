@@ -109,15 +109,27 @@ class WriteDiaryViewController: UIViewController {
         
         switch self.diaryEditorMode {
         case .new:
-            let diary = Diary(title: title, contents: contents, date: date, isStar: false)
+            let diary = Diary(
+                uuidString: UUID().uuidString, //일기를 생성할 때마다 일기를 특정할 수 있는 고유 번호 생성
+                title: title,
+                contents: contents,
+                date: date,
+                isStar: false
+            )
             self.delegate?.didSelectReigster(diary: diary)
-        case let .edit(indexPath, diary):
-            let diary = Diary(title: title, contents: contents, date: date, isStar: diary.isStar)
-            NotificationCenter.default.post(name: NSNotification.Name("editDiary"),
-                                            object: diary,//NotificationCenter를 통해 전달할 객체를 넘겨준다.
-                                            userInfo: [
-                                                "indexPath.row": indexPath.row
-                                            ])//Notification과 관련된 값을 넘겨줄 수 있다. 컬렉션뷰 수정을 위한 indexPath를 넘겨준다.딕셔너리 타입으로 넘겨준다.
+        case let .edit(_, diary):
+            let diary = Diary(
+                uuidString: diary.uuidString,
+                title: title,
+                contents: contents,
+                date: date,
+                isStar: diary.isStar
+            )
+            NotificationCenter.default.post(
+                name: NSNotification.Name("editDiary"),
+                object: diary,//NotificationCenter를 통해 전달할 객체를 넘겨준다.
+                userInfo: nil
+            )//Notification과 관련된 값을 넘겨줄 수 있다. 컬렉션뷰 수정을 위한 indexPath를 넘겨준다.딕셔너리 타입으로 넘겨준다.
             //name 파라미터에는 Notification의 이름을 적어주면 되는데, 이 이름을 가지고 옵져버에서 설정한 이름의 Notification이벤트가 발생했는지 관찰한다.
             //이렇게 되면 수정버튼을 눌렀을 때 NotificationCenter가 "editDiary"라는 Notification 키를 옵져빙하는 곳에 수정된 Diary객체를 전달하게 된다.
         }
